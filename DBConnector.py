@@ -37,9 +37,19 @@ class DBConnector:
 
         return groups
 
+    def getRSSOfTagsByMeasurement(self, measurement_list):
+        data = []
+        for m in measurement_list:
+            a = list(self._reader.find({"measurement_uuid":m},{"data.RSSI":1, "data.EPC":1}))
+            data.append(a)
+
+        return data
+
 db  = DBConnector()
 db.selectReader("192.168.0.69")
 measure = db.getDistinctMeasurementIDs()
-g = db.getTagsGroupedByAnt(measure[:100])
+#g = db.getTagsGroupedByAnt(measure[:100])
+
+g = db.getRSSOfTagsByMeasurement(measure[:100])
 with open("outfile", 'wb') as f:
     pickle.dump(g, f)
