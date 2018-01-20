@@ -25,11 +25,13 @@ class DBConnector:
 
         self._reader = self._db['raw_data_' + ip]
 
-    def getTagsGroupedByAnt(self):
-        diff_measurement = list(self._reader.distinct('measurement_uuid'))
-        print(len(diff_measurement))
+    def getDistinctMeasurementIDs(self):
+        return list(self._reader.distinct('measurement_uuid'))
+        
+
+    def getTagsGroupedByAnt(self, measurement_list):
         groups = [[],[],[],[]]
-        for m in diff_measurement[:100]:
+        for m in measurement_list:
             a = list(self._reader.find({"measurement_uuid":m},{"data.AntennaPort":1, "data.EPC":1}))
             groups[a[0]["data"]["AntennaPort"] & 0x3].append([d["data"]["EPC"] for d in a])
 
@@ -37,6 +39,7 @@ class DBConnector:
 
 db  = DBConnector()
 db.selectReader("192.168.0.69")
-g = db.getTagsGroupedByAnt()
+measure = db.getDistinctMeasurementIDs()
+g = db.getTagsGroupedByAnt(measure[:100])
 with open("outfile", 'wb') as f:
     pickle.dump(g, f)
