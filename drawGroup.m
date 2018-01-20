@@ -16,7 +16,8 @@ for i = 1:n
      if(~isempty(inx))
         d = data(inx,2:4)
         scatter3(d(1),d(2),d(3),'filled');
-        hold();
+        hold on;
+        
      end
    end
   
