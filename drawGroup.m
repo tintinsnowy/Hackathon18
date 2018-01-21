@@ -12,10 +12,10 @@ for i = 1:n
 
    for j = 1:m
      Tag = IdSet(j);
-     inx = find(ls==Tag)
+     inx = find(ls==Tag);
      if(~isempty(inx))
-        d = data(inx,2:4)
-        scatter3(d(1),d(2),d(3),'filled');
+        d = data(inx,2:4);
+        scatter3(d(1),d(2),d(3));
         hold on;
         
      end
