@@ -9,4 +9,4 @@ for i = 1:len
 end
 strJS = fileread('Reader1-A1.json');
 jsonG = jsondecode(strJS);
-drawGroup(data,ls,jsonG);
+drawGroup_hc(data,ls,jsonG);
